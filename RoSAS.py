@@ -10,7 +10,7 @@ class RoSAS:
     def __init__(self, device='cuda', nbatch_per_epoch=16, epochs=100, batch_size=128,
                  network='e1s1', n_emb=128, lr=0.005, margin=1., alpha=0.5, beta=1., T=2, k=2,
                  score_loss='smooth', milestones=None,
-                 prt_step=1, use_es=True, seed=42):
+                 prt_step=10, use_es=True, seed=42):
         self.device = device
 
         self.epochs = epochs
@@ -218,36 +218,6 @@ class Loss(torch.nn.Module):
         loss_emb = self.loss_tri(anchor_emb, pos_emb, neg_emb)
         l2_reg = torch.norm(anchor_emb + pos_emb + neg_emb, p=2)
 
-        # # # regression loss on anomalies
-        # loss_reg1 = self.loss_reg(neg_s, torch.ones_like(neg_s)).mean()
-        #
-        # # # regression loss on normal
-        # loss_reg0 = self.loss_reg(pos_s, -1 * torch.ones_like(neg_s)).mean()
-
-
-        # # different lambdas in different pairs
-        # # normal-normal
-        # Beta00 = torch.distributions.dirichlet.Dirichlet(torch.tensor([1., 1.]))
-        # lambdas00 = Beta00.sample(target_i.flatten().shape).to(self.device)[:, 1]
-        #
-        # # anomaly-anomaly
-        # Beta11 = torch.distributions.dirichlet.Dirichlet(torch.tensor([0.5, 0.5]))
-        # lambdas11 = Beta11.sample(target_i.flatten().shape).to(self.device)[:, 1]
-        #
-        # # anomaly-normal
-        # Beta01 = torch.distributions.dirichlet.Dirichlet(torch.tensor([2., 2.]))
-        # lambdas01 = Beta01.sample(target_i.flatten().shape).to(self.device)[:, 1]
-        #
-        # lambdas = torch.zeros_like(lambdas00)
-        # idx = (target_i.flatten() == -1.) & (target_j.flatten() == -1.)
-        # lambdas[idx] = lambdas00[idx]
-        # idx = (target_i.flatten() == 1.) & (target_j.flatten() == 1.)
-        # lambdas[idx] = lambdas11[idx]
-        # idx = (target_i.flatten() == -1.) & (target_j.flatten() == 1.)
-        # lambdas[idx] = lambdas01[idx]
-        # idx = (target_i.flatten() == 1.) & (target_j.flatten() == -1.)
-        # lambdas[idx] = lambdas01[idx]
-
         pp=self.k
         if pp == 2:
             x_i = torch.cat((anchor, pos, neg), 0)
@@ -319,11 +289,6 @@ class Loss(torch.nn.Module):
             loss_score = loss_score.mean()
             loss_out = loss_out.mean()
             loss_intra = loss_intra.mean()
-
-        # # from matplotlib import pyplot as plt
-        # # yy = y_tilde.flatten().data.cpu().numpy()
-        # # plt.hist(yy, bins=20)
-        # # plt.show()
 
         k1 = torch.exp((loss_emb / pre_emb_loss) / self.T) if pre_emb_loss != 0 else 0
         k2 = torch.exp((loss_score / pre_score_loss) / self.T) if pre_score_loss != 0 else 0

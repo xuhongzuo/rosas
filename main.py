@@ -12,7 +12,7 @@ import yaml
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--path', type=str, default='data', help='data path')
-parser.add_argument('--datasets', type=str, default='pendigits',
+parser.add_argument('--datasets', type=str, default='pendigits,thyroid',
                     help='dataset name of the path, use FULL to include all the datasets')
 parser.add_argument('--algo', type=str, default="rosas")
 parser.add_argument('--flag', type=str, default="")
@@ -38,7 +38,6 @@ root_path = './'
 def run_model(df, dataset_name, runs):
     model_name = args.algo
 
-    print(f'{dataset_name}')
     print("------------------------------------ Dataset: [%s] ------------------------------------" % dataset_name)
     df.replace([np.inf, -np.inf], np.nan, inplace=True)
     df.fillna(method='ffill', inplace=True)
