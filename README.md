@@ -17,8 +17,7 @@ in addition with unlabeled data. We address two key limitations in existing work
 
 Note:
 
-:pushpin:We will include RoSAS into our `DeepOD` python library.   
-Please see https://github.com/xuhongzuo/DeepOD
+:pushpin:We will include RoSAS into our `DeepOD` python library (https://github.com/xuhongzuo/DeepOD)
 
 
 ## Usage
