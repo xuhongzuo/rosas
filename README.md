@@ -4,7 +4,7 @@
 
 Official implementation of the paper 
 **"RoSAS: Deep Semi-supervised Anomaly Detection with Contamination-resilient Continuous Supervision"** 
-published in *Information Processing & Management*.  (to appear)
+published in *Information Processing & Management*.  (see https://www.sciencedirect.com/science/article/abs/pii/S0306457323001966)
 
 
 RoSAS is a semi-supervised anomaly detection method that can use limited labeled anomalies 
@@ -38,12 +38,18 @@ score = model.predict(X_test) # X_test is the testing data, use np.array
 :memo: Please consider citing our paper if you find this repository useful.  
 
 ```
-@article{xu2022deep,
-  title={RoSAS: Deep Semi-supervised Anomaly Detection with Contamination-resilient Continuous Supervision},
-  author={Xu, Hongzuo and Wang, Yijie and Pang, Guansong and Jian, Songlei and Wang, Yongjun},
-  journal={Information Processing & Management},
-  year={2023}
+@article{xu2023rosas,
+title = {RoSAS: Deep semi-supervised anomaly detection with contamination-resilient continuous supervision},
+author = {Hongzuo Xu and Yijie Wang and Guansong Pang and Songlei Jian and Ning Liu and Yongjun Wang},
+journal = {Information Processing & Management},
+volume = {60},
+number = {5},
+pages = {103459},
+year = {2023},
+issn = {0306-4573},
+doi = {https://doi.org/10.1016/j.ipm.2023.103459},
 }
+
 ```
 
 
